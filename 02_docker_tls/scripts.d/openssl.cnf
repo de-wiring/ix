@@ -1,3 +1,9 @@
+# The MIT License (MIT)
+# Copyright (c) 2015 de-wiring.net
+#
+# EXAMPLE script, NOT READY FOR PRODUCTION USE
+#
+
 HOME                    = /etc/docker-tls
 RANDFILE                = $ENV::HOME/.rnd
 
@@ -109,7 +115,7 @@ localityName                    = Locality Name (eg, city)
 localityName_default            = Berlin
 
 0.organizationName              = Organization Name (eg, company)
-0.organizationName_default      = de-wiring.net
+0.organizationName_default      = YourOrg.com
 
 organizationalUnitName          = Organizational Unit Name (eg, section)
 

@@ -1,5 +1,7 @@
 require 'spec_helper.rb'
 
+# The MIT License (MIT)
+
 # This serverspec ensures that
 # - tls is configured in docker defaults file
 # - certs and keys are present and valid (using openssl verify)
@@ -10,11 +12,13 @@ require 'spec_helper.rb'
 # dependencies
 # - openssl, lsof, netstat, docker client
 
-#
+#  This is a sample specification, it has to be adapted to
+#  local paths and settings.
+
 # Configuration ---------------
 #
 HOST_IP='10.0.2.15'
-HOST_NAME='docker-server.local'				# use SAN from certificate
+HOST_NAME='docker-server.local'				
 CERT_PATH='/etc/docker-tls/certs'			# where certificates are
 KEY_PATH='/etc/docker-tls/private'			# where keys are
 CA_FILE='/etc/docker-tls/cacert.pem'
@@ -25,7 +29,7 @@ SERVER_CERT_FILE='server-cert.pem'
 CLIENT_KEY_FILE='client-key.pem'
 SERVER_KEY_FILE='server-key.pem'
 # certificate details to check for
-CERT_ISSUER=/C=DE\/L=Berlin\/O=de-wiring.net/
+CERT_ISSUER=/C=DE\/L=Berlin\/O=YourOrg.com/
 SERVER_CERT_SUBJECT=/^subject=.*\/CN=docker-server.local/
 CLIENT_CERT_SUBJECT=/^subject=.*\/CN=client/
 # -----------------------------
@@ -65,13 +69,32 @@ describe 'keys and certs should be present and valid' do
 			its(:exit_status) { should be 0 }
 		end
 	end
-	describe command "openssl x509 -in #{CERT_PATH}/#{SERVER_CERT_FILE} -subject -noout" do
-		its(:stdout) { should match SERVER_CERT_SUBJECT }
-		its(:exit_status) { should be 0 }
+
+	describe 'Server key should match server cert' do
+		describe command "(openssl x509 -noout -modulus -in #{CERT_PATH}/#{SERVER_CERT_FILE} | openssl md5 ; \
+				   openssl rsa -noout -modulus -in #{KEY_PATH}/#{SERVER_KEY_FILE} | openssl md5 ) | \
+					uniq | wc -l" do
+			its(:stdout) { should match /^1$/ }
+		end
 	end
-	describe command "openssl x509 -in #{CERT_PATH}/#{CLIENT_CERT_FILE} -subject -noout" do
-		its(:stdout) { should match CLIENT_CERT_SUBJECT }
-		its(:exit_status) { should be 0 }
+
+	describe 'Client key should match client cert' do
+		describe command "(openssl x509 -noout -modulus -in #{CERT_PATH}/#{CLIENT_CERT_FILE} | openssl md5 ; \
+				   openssl rsa -noout -modulus -in #{KEY_PATH}/#{CLIENT_KEY_FILE} | openssl md5 ) | \
+					uniq | wc -l" do
+			its(:stdout) { should match /^1$/ }
+		end
+	end
+
+	describe 'Key subjects should be valid' do
+		describe command "openssl x509 -in #{CERT_PATH}/#{SERVER_CERT_FILE} -subject -noout" do
+			its(:stdout) { should match SERVER_CERT_SUBJECT }
+			its(:exit_status) { should be 0 }
+		end
+		describe command "openssl x509 -in #{CERT_PATH}/#{CLIENT_CERT_FILE} -subject -noout" do
+			its(:stdout) { should match CLIENT_CERT_SUBJECT }
+			its(:exit_status) { should be 0 }
+		end
 	end
 end
 
@@ -156,8 +179,10 @@ describe 'it should respond to docker client using TLS' do
 			--tlscacert=#{CA_FILE} \
 			--tlscert=#{CERT_PATH}/#{CLIENT_CERT_FILE} \
 			--tlskey=#{KEY_PATH}/#{CLIENT_KEY_FILE} \
-			info" do
+			version" do
 		its(:exit_status) { should eq 0 }
+                its(:stdout) { should match /Server API version/ }
+                its(:stdout) { should match /Server version/ }
 	end
 end
 

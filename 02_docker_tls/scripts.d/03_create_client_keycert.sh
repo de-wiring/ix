@@ -1,7 +1,13 @@
 #!/bin/bash -x
 
+# The MIT License (MIT)
+# Copyright (c) 2015 de-wiring.net
+#
+# EXAMPLE script, NOT READY FOR PRODUCTION USE
+#
+
 # --
-# given a ca, create key and cert for docker daemon (server part)
+# given a ca, create key and cert for docker client
 
 # must run as root
 if [[ `id -u` != 0 ]]; then

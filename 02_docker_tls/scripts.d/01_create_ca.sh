@@ -1,5 +1,11 @@
 #!/bin/bash -x
 
+# The MIT License (MIT)
+# Copyright (c) 2015 de-wiring.net
+#
+# EXAMPLE script, NOT READY FOR PRODUCTION USE
+#
+
 # --
 # create a ca structure
 
