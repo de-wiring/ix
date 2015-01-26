@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 # The MIT License (MIT)
 # Copyright (c) 2015 de-wiring.net

@@ -32,6 +32,8 @@ SERVER_KEY_FILE='server-key.pem'
 CERT_ISSUER=/C=DE\/L=Berlin\/O=YourOrg.com/
 SERVER_CERT_SUBJECT=/^subject=.*\/CN=docker-server.local/
 CLIENT_CERT_SUBJECT=/^subject=.*\/CN=client/
+# FLAG: should local socket be allowed or not
+ALLOW_SOCKET=false
 # -----------------------------
 
 
@@ -132,19 +134,30 @@ describe 'it should be running on specific port/ip' do
 
 end
 
-# check that we do not a have a socker, additionally
-# use lsof to ensure no activity on socket even if there
-# is a socket.
-describe 'it should NOT be running on docker socket' do
-
-	describe file '/var/run/docker.sock' do
-		it { should_not be_socket }
+if ALLOW_SOCKET == false then
+	# use lsof to ensure no activity on socket even if there
+	# is a socket.
+	describe 'it should NOT be running on docker socket' do
+	
+		# extra check
+		describe command 'test -S /var/run/docker.sock && lsof /var/run/docker.sock' do
+			its(:stdout) { should_not match /^docker.*docker.sock$/ }
+			its(:stdout) { should match /^$/ }
+		end
 	end
-
-	# extra check
-	describe command 'test -S /var/run/docker.sock && lsof /var/run/docker.sock' do
-		its(:stdout) { should_not match /^docker.*docker.sock$/ }
-		its(:stdout) { should match /^$/ }
+else
+	# ensure that socket exists and is active
+	describe 'it should be running on docker socket' do
+	
+		describe file '/var/run/docker.sock' do
+			it { should be_socket }
+		end
+	
+		# extra check
+		describe command 'test -S /var/run/docker.sock && lsof /var/run/docker.sock' do
+			its(:stdout) { should match /^docker.*docker.sock$/ }
+			its(:stdout) { should_not match /^$/ }
+		end
 	end
 end
 
