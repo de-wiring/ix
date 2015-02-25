@@ -8,5 +8,4 @@ docker info
 
 # pull us some images to play with
 docker pull busybox:latest
-docker pull scratch:latest
 
