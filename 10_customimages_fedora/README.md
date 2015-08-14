@@ -184,7 +184,7 @@ Build an appliance.
 	--release 22 \
 	--format qcow2
 
-~# # find output/
+~# find output/
 output/
 output/container-small-22
 output/container-small-22/container-small-22-sda.qcow2
@@ -212,12 +212,13 @@ This image is not yet a minimal, hardened base image, but can serve as a startin
 ```bash
 # docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
-myfedora            22                  6f2942401a3e        25 minutes ago      191.8 MB
+my_fedora           22                  6f2942401a3e        25 minutes ago      191.8 MB
 ```
 
 ## Refs
 
 [1] https://git.fedorahosted.org/cgit/cloud-kickstarts.git/plain/container/container-small-19.ks
+[2] http://allthingsopen.com/2013/12/19/building-docker-images-on-fedora/
 
 ## License
 The MIT License (MIT)
