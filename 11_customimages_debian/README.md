@@ -1,10 +1,18 @@
-# Debian Custom Images for Docker
+# Custom Docker Images on Debian Jessie 
 
-##
+## Prerequisites
+
+docker is installed by vagrant provision mechanism, we'll need `debootstrap`:
 
 ```bash
-root@debian-jessie:/vagrant/provision.d# apt-get install debootstrap
-root@debian-jessie:/vagrant/provision.d# /usr/share/docker.io/contrib/mkimage.sh
+root@debian-jessie:# apt-get install debootstrap
+```
+
+Docker supplies a script `mkimage.sh` which "frames" the creation step (of i.e. debootstrap) with a pre setup and a 
+post-call to docker build.
+
+```bash
+root@debian-jessie:# /usr/share/docker.io/contrib/mkimage.sh
 usage: mkimage.sh [-d dir] [-t tag] script [script-args]
    ie: mkimage.sh -t someuser/debian debootstrap --variant=minbase jessie
        mkimage.sh -t someuser/ubuntu debootstrap --include=ubuntu-minimal --components=main,universe trusty
@@ -12,8 +20,12 @@ usage: mkimage.sh [-d dir] [-t tag] script [script-args]
        mkimage.sh -t someuser/centos:5 rinse --distribution centos-5
        mkimage.sh -t someuser/mageia:4 mageia-urpmi --version=4
        mkimage.sh -t someuser/mageia:4 mageia-urpmi --version=4 --mirror=http://somemirror/
+```
 
-root@debian-jessie:/vagrant/provision.d# debootstrap --help
+`debootstrap` 
+
+```bash
+root@debian-jessie:# debootstrap --help
 Usage: debootstrap [OPTION]... <suite> <target> [<mirror> [<script>]]
 Bootstrap a Debian base system into a target directory.
 
@@ -52,10 +64,18 @@ Bootstrap a Debian base system into a target directory.
       --no-check-certificate do not check certificate against certificate authorities
 ```
 
-Run mkimage.sh with debootstrap, go with --verbose:
+Run mkimage.sh with debootstrap. Build into `/root`, tagging the image as `de-wiring/debian:jessie`, after successful execution of
+`debootstrap`, installing debian jessie in variant minbase. 
 
 ```bash
-root@debian-jessie:/vagrant/provision.d# /usr/share/docker.io/contrib/mkimage.sh -d /root -t de-wiring/debian:jessie debootstrap --verbose --variant=minbase jessie
+root@debian-jessie:# /usr/share/docker.io/contrib/mkimage.sh \
+	-d /root \
+	-t de-wiring/debian:jessie \
+		debootstrap \
+			--verbose \
+			--variant=minbase \
+			jessie
+
 + mkdir -p /root/rootfs
 + debootstrap --verbose --variant=minbase jessie /root/rootfs
 I: Retrieving Release
@@ -168,10 +188,16 @@ Successfully built e744ddd85a62
 root@debian-jessie:/vagrant/provision.d#
 ```
 
+Compressed tarball remains in target directory:
+
 ```bash
 ~# root@debian-jessie:~# ls -alh /root/rootfs.tar.xz
 -rw-r--r-- 1 root root 29M Aug 14 15:51 /root/rootfs.tar.xz
+```
 
+And the image is available:
+
+```bash
 ~# docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED              VIRTUAL SIZE
 de-wiring/debian    jessie              e744ddd85a62        About a minute ago   123.8 MB
