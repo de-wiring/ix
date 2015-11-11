@@ -1,2 +1,4 @@
 .vagrant
 .rspec
+*.sublime-workspace
+*.sublime-project
