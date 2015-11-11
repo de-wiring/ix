@@ -8,22 +8,22 @@
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "eu-west-1",
-    "source_ami": "ami-e8de819f",
+    "source_ami": "ami-854079f2",
+    "ami_virtualization_type": "hvm",
     "instance_type": "t2.micro",
-    "ssh_username": "ubuntu",
-    "ami_name": "heise docker ws ubuntu {{timestamp}}",
+    "ssh_username": "fedora",
+    "ami_name": "heise docker ws fedora {{timestamp}}",
     "vpc_id": "vpc-fa13df9f",
     "subnet_id": "subnet-6200f93b",
-    "associate_public_ip_address": "true",
-    "ami_virtualization_type": "hvm"
+    "associate_public_ip_address": "true"
   }],
   "provisioners": [{
     "type": "shell",
     "inline": [
       "sleep 30",
-      "sudo /usr/bin/apt-get update -y",
-      "sudo DEBIAN_FRONTEND=noninteractive /usr/bin/apt-get install -y curl git net-tools deltarpm gem ruby libguestfs-tools debootstrap",
-      "sudo /usr/sbin/useradd -m demo"
+      "sudo /usr/bin/dnf update -y",
+      "sudo /usr/bin/dnf install -y curl git net-tools deltarpm gem ruby appliance-tools libguestfs-tools shadow-utils",
+      "sudo /sbin/useradd demo"
     ]
   },
   {
@@ -37,7 +37,7 @@
   {
     "type": "shell",
     "script": "bin/20_serverspec.sh"
-    },
+  },
   {
     "type": "shell",
     "script": "bin/60_demo.sh"
