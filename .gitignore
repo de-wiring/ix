@@ -2,3 +2,4 @@
 .rspec
 *.sublime-workspace
 *.sublime-project
+packer_cache/
