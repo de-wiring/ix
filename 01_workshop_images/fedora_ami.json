@@ -1,7 +1,9 @@
 {
   "variables": {
     "aws_access_key": "",
-    "aws_secret_key": ""
+    "aws_secret_key": "",
+    "vpc_id": "",
+    "subnet_id": ""
   },
   "builders": [{
     "type": "amazon-ebs",
@@ -13,8 +15,8 @@
     "instance_type": "t2.micro",
     "ssh_username": "fedora",
     "ami_name": "heise docker ws fedora {{timestamp}}",
-    "vpc_id": "vpc-fa13df9f",
-    "subnet_id": "subnet-6200f93b",
+    "vpc_id": "{{user `vpc_id`}}",
+    "subnet_id": "{{user `subnet_id`}}",
     "associate_public_ip_address": "true"
   }],
   "provisioners": [{
