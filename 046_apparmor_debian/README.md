@@ -65,7 +65,7 @@ docker-default    root   932  82  0 12:35 pts/1 00:00:00 /bin/bash
 
 ## Creating a custom profile
 
-In this small example, we just copy the docker-default profile to a -custom profile and add a rule:
+In this small example, we just copy the `docker`default profile to a `docker-custom` profile and add a rule:
 
 ```bash
 ~# cd /etc/apparmor.d
@@ -82,7 +82,7 @@ add at end:
 
 ```
 
-This way, we deny i.e. the execution of `/sbin/bridge`:
+This way, we deny i.e. the execution of `/sbin/bridge`. Note the argument to docker run, `--security-opt="apparmor:docker-custom"`.
 
 ```bash
 ~# docker run -ti --security-opt="apparmor:docker-custom" debian:jessie /bin/bash
