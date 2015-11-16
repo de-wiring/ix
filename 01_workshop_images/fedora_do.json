@@ -1,0 +1,41 @@
+{
+  "variables": {
+    "api_token": ""
+  },
+  "builders": [{
+    "type": "digitalocean",
+    "api_token": "{{user `api_token`}}",
+    "image": "fedora-22-x64",
+    "region": "fra1",
+    "size": "512mb",
+    "snapshot_name": "heise docker ws fedora {{timestamp}}"
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "inline": [
+      "sleep 30",
+      "sudo /usr/bin/dnf update -y",
+      "sudo /usr/bin/dnf install -y curl git net-tools deltarpm gem ruby appliance-tools libguestfs-tools shadow-utils",
+      "sudo /sbin/useradd demo",
+      "echo \"%sudo  ALL=(ALL:ALL) ALL\" >> /etc/sudoers",
+      "sudo groupadd sudo",
+      "sudo usermod -a -G sudo demo"
+    ]
+  },
+  {
+    "type": "shell",
+    "script": "bin/05_env.sh"
+  },
+  {
+    "type": "shell",
+    "script": "bin/10_docker.sh"
+  },
+  {
+    "type": "shell",
+    "script": "bin/20_serverspec.sh"
+  },
+  {
+    "type": "shell",
+    "script": "bin/60_demo.sh"
+  }]
+}
