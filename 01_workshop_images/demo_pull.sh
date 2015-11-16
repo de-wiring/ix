@@ -32,6 +32,9 @@ if id -u demo >/dev/null 2>&1; then
   clone_or_pull_github docker docker-bench-security third-party
   clone_or_pull_github cisofy lynis third-party
 
+  # extra docker 1.8.3
+  ( cd /home/demo/third-party/docker;  git fetch --tags; git checkout v1.8.3 )
+
 else
   echo "Error: user demo does not exist."
   exit 1
