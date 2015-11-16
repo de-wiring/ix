@@ -25,7 +25,8 @@
       "sleep 30",
       "sudo /usr/bin/apt-get update -y",
       "sudo DEBIAN_FRONTEND=noninteractive /usr/bin/apt-get install -y curl git net-tools deltarpm gem ruby libguestfs-tools debootstrap",
-      "sudo /usr/sbin/useradd -m demo"
+      "sudo /usr/sbin/useradd -m demo",
+      "sudo adduser demo sudo"
     ]
   },
   {

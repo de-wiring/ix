@@ -25,7 +25,10 @@
       "sleep 30",
       "sudo /usr/bin/dnf update -y",
       "sudo /usr/bin/dnf install -y curl git net-tools deltarpm gem ruby appliance-tools libguestfs-tools shadow-utils",
-      "sudo /sbin/useradd demo"
+      "sudo /sbin/useradd demo",
+      "echo \"%sudo  ALL=(ALL:ALL) ALL\" >> /etc/sudoers",
+      "sudo groupadd sudo",
+      "sudo usermod -a -G sudo demo"
     ]
   },
   {
