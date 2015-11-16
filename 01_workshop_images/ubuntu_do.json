@@ -15,9 +15,10 @@
     "inline": [
       "sleep 30",
       "sudo /usr/bin/apt-get update -y",
-      "sudo DEBIAN_FRONTEND=noninteractive /usr/bin/apt-get install -y curl git net-tools deltarpm gem ruby libguestfs-tools debootstrap",
+      "sudo DEBIAN_FRONTEND=noninteractive /usr/bin/apt-get install -y curl git net-tools deltarpm gem ruby libguestfs-tools debootstrap vim",
       "sudo /usr/sbin/useradd -m demo",
-      "sudo adduser demo sudo"
+      "sudo adduser demo sudo",
+      "sudo sed -i '/^%sudo/ s/ALL$/NOPASSWD:ALL/' /etc/sudoers"
     ]
   },
   {
