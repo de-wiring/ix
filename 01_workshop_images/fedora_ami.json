@@ -43,5 +43,5 @@
   {
     "type": "shell",
     "script": "bin/60_demo.sh"
-    }]
+  }]
 }

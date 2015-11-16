@@ -39,9 +39,9 @@
   {
     "type": "shell",
     "script": "bin/20_serverspec.sh"
-    },
+  },
   {
     "type": "shell",
     "script": "bin/60_demo.sh"
-    }]
+  }]
 }
