@@ -1,8 +1,6 @@
-# Server lockdown
+# Server lockdown w/ hardening.io
 
-## hardening.io
-
-### with local virtualbox
+## with local virtualbox
 ```
 $ vagrant up
 $ vagrant ssh
@@ -25,13 +23,19 @@ demo@debian-jessie:~$ librarian-puppet install
 demo@debian-jessie:~$ sudo puppet apply manifests/default.pp --modulepath=./modules
 ```
 
-### with AWS/DO image
+## with AWS/DO image
+
+### install puppet
+| Fedora                                 | Ubuntu                                 |
+| -------------------------------------- | -------------------------------------- |
+| ```$ sudo dnf -y install puppet```     | ```$ sudo apt-get -y install puppet``` |
+
+### install current librarian-puppet
 ```
 $ sudo -i -u demo
-$ sudo gem install librarian-puppet
+$ PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+$ gem install librarian-puppet --user-install
 ```
-
-log out and back in
 
 ### pull hardening.io repository
 ```
