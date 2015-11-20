@@ -55,6 +55,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define 'jessieimage', primary: true do |m|
 	  m.vm.provision 'shell', path: 'provision.d/01_os.sh'
-	  m.vm.provision 'shell', path: 'provision.d/10_docker.sh'
   end
 end

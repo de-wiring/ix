@@ -2,22 +2,25 @@
 
 ## hardening.io
 
-login to virtualbox
+### login to virtualbox
 ```
 $ vagrant up
 $ vagrant ssh
 vagrant@debian-jessie:~$ sudo -i -u demo
 ```
-install puppet
+
+### pull hardening.io repository
 ```
-demo@debian-jessie:~$ sudo apt-get install puppet
+demo@debian-jessie:~$ git clone https://github.com/hardening-io/hardening.git
+demo@debian-jessie:~$ cd hardening/puppet
 ```
 
-pull hardening.io repository
+### load puppet modules using librarian
 ```
-demo@debian-jessie:~$ 
+demo@debian-jessie:~$ librarian-puppet install
 ```
 
-create puppet module with hardening steps and apply
+### run puppet apply with hardening steps for os and ssh 
 ```
+demo@debian-jessie:~$ sudo puppet apply manifests/default.pp --modulepath=./modules
 ```
