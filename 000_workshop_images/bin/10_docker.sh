@@ -6,5 +6,6 @@ sudo /bin/systemctl start docker
 sudo /usr/bin/docker pull fedora:22
 sudo /usr/bin/docker pull debian:jessie
 sudo /usr/bin/docker pull busybox
+sudo /usr/bin/docker pull dewiring/trustit
 
 sudo usermod -aG docker demo
