@@ -57,6 +57,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     m.vm.provision 'file', source: 'provision.d/Dockerfile', destination: '/tmp/Dockerfile'
 	  m.vm.provision 'shell', path: 'provision.d/01_os.sh'
 	  m.vm.provision 'shell', path: 'provision.d/10_docker.sh'
-	  m.vm.provision 'shell', path: 'provision.d/20_notary.sh'
+	  m.vm.provision 'shell', path: 'provision.d/23_notary.sh'
   end
 end

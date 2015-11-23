@@ -14,8 +14,9 @@ docker build -t notarysandbox .
 cd .. || exit
 git clone -b trust-sandbox https://github.com/docker/notary.git
 cd notary || exit
-docker-compose build
+sudo /usr/local/bin/docker-compose build
 
+cd .. || exit
 git clone https://github.com/docker/distribution.git
 cd ../distribution || exit
 docker build -t sandboxregistry .
