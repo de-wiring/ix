@@ -36,9 +36,11 @@ if id -u demo >/dev/null 2>&1; then
   clone_or_pull_github docker docker third-party
   clone_or_pull_github docker docker-bench-security third-party
   clone_or_pull_github cisofy lynis third-party
+  clone_or_pull_github dockersecuritytools batten third-party
   sudo chown -R root. /home/demo/third-party/lynis
   sudo chmod 640 /home/demo/third-party/lynis/include/consts
   sudo chmod 640 /home/demo/third-party/lynis/include/functions
+  sudo chmod 640 /home/demo/third-party/lynis/include/*
 
   # extra docker 1.8.3
   ( cd /home/demo/third-party/docker || exit_on_error "ERROR: directory does not exist. Exiting.";  git fetch --tags; git checkout v1.8.3 )

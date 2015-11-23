@@ -45,6 +45,10 @@
   },
   {
     "type": "shell",
+    "script": "bin/23_notary.sh"
+  },
+  {
+    "type": "shell",
     "script": "bin/60_demo.sh"
   }]
 }

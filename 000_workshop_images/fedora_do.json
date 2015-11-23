@@ -7,7 +7,7 @@
     "api_token": "{{user `api_token`}}",
     "image": "fedora-22-x64",
     "region": "fra1",
-    "size": "512mb",
+    "size": "1gb",
     "snapshot_name": "heise docker ws fedora {{timestamp}}"
   }],
   "provisioners": [{
@@ -33,6 +33,10 @@
   {
     "type": "shell",
     "script": "bin/20_serverspec.sh"
+  },
+  {
+    "type": "shell",
+    "script": "bin/23_notary.sh"
   },
   {
     "type": "shell",

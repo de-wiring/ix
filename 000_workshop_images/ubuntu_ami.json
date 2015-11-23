@@ -24,7 +24,7 @@
     "inline": [
       "sleep 30",
       "sudo /usr/bin/apt-get update -y",
-      "sudo DEBIAN_FRONTEND=noninteractive /usr/bin/apt-get install -y curl git net-tools deltarpm gem ruby libguestfs-tools debootstrap vim cpp build-essential",
+      "sudo DEBIAN_FRONTEND=noninteractive /usr/bin/apt-get install -y curl git net-tools deltarpm gem ruby libguestfs-tools debootstrap vim cpp build-essential apparmor-utils apparmor-profiles auditd",
       "sudo /usr/sbin/useradd -m demo -s /bin/bash",
       "sudo adduser demo sudo",
       "sudo sed -i '/^%sudo/ s/ALL$/NOPASSWD:ALL/' /etc/sudoers"
@@ -41,6 +41,10 @@
   {
     "type": "shell",
     "script": "bin/20_serverspec.sh"
+  },
+  {
+    "type": "shell",
+    "script": "bin/23_notary.sh"
   },
   {
     "type": "shell",
