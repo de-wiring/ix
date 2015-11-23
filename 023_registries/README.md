@@ -13,21 +13,26 @@ demo@debian-jessie:~$
 
 ## with AWS/DO image
 
+### fix up /etc/hosts
+<host>$ sudo sh -c 'echo "127.0.0.1 notaryserver" >> /etc/hosts'
+<host>$ sudo sh -c 'echo "127.0.0.1 sandboxregistry" >> /etc/hosts'
+
 ### start notary server and registry
 ```
 <host>$ cd notarysandbox/notary
-<host>$ sudo docker-compose up -d
+<host>$ sudo /usr/local/bin/docker-compose up -d
 <host>$ cd ../distribution/
 <host>$ sudo docker run -p 5000:5000 --name sandboxregistry sandboxregistry &
 ```
 
 ----
 **Note: Open a second shell to the host to run the following commands.**
-- step 1: upload an unsigned image to the sandbox registry
-- result: pull should fail
+- step 1: download an unsigned image from the docker hub and tag it to be pushed to the sandbox registry
+- result: after enabling content trust docker pull should fail
 
 ```
 <host>$ sudo docker run -it -v /var/run/docker.sock:/var/run/docker.sock --link notary_notaryserver_1:notaryserver --link sandboxregistry:sandboxregistry notarysandbox
+<sandbox_container>$ docker pull dewiring/trustit
 <sandbox_container>$ docker tag -f dewiring/trustit sandboxregistry:5000/dewiring/trustit:latest
 <sandbox_container>$ export DOCKER_CONTENT_TRUST=1
 <sandbox_container>$ export DOCKER_CONTENT_TRUST_SERVER=https://notaryserver:4443
