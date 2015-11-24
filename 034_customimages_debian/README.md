@@ -12,7 +12,7 @@ Docker supplies a script `mkimage.sh` which "frames" the creation step (of i.e. 
 post-call to docker build.
 
 ```bash
-root@debian-jessie:# /usr/share/docker.io/contrib/mkimage.sh
+root@debian-jessie:# /usr/share/docker-engine/contrib/mkimage.sh
 usage: mkimage.sh [-d dir] [-t tag] script [script-args]
    ie: mkimage.sh -t someuser/debian debootstrap --variant=minbase jessie
        mkimage.sh -t someuser/ubuntu debootstrap --include=ubuntu-minimal --components=main,universe trusty
@@ -68,7 +68,7 @@ Run mkimage.sh with debootstrap. Build into `/root`, tagging the image as `de-wi
 `debootstrap`, installing debian jessie in variant minbase. 
 
 ```bash
-root@debian-jessie:# /usr/share/docker.io/contrib/mkimage.sh \
+root@debian-jessie:# /usr/share/docker-engine/contrib/mkimage.sh \
 	-d /root \
 	-t de-wiring/debian:jessie \
 		debootstrap \
